@@ -1,17 +1,18 @@
 # Network Health Monitor
 
-Uma ferramenta de linha de comando (CLI) leve e modular em Python para diagnóstico rápido de conectividade e integridade de rede local e externa.
+Uma ferramenta de linha de comando (CLI) em Python, leve e modular, voltada para diagnóstico rápido de conectividade e verificação de integridade de rede local e remota.
 
-O projeto utiliza exclusivamente bibliotecas padrões do Python (`subprocess`, `socket`, `re`, `argparse`), sem necessidade de dependências externas.
+O projeto utiliza estritamente módulos da biblioteca padrão do Python (`subprocess`, `socket`, `re`, `argparse`), garantindo portabilidade sem dependências externas em tempo de execução.
 
 ---
 
 ## Funcionalidades
 
-- **Detecção Automática de Gateway:** Identifica o gateway padrão consultando a tabela de rotas do sistema operacional (`ip route`).
-- **Diagnóstico ICMP (Ping):** Calcula perda de pacotes e tempo médio de resposta (RTT) para o gateway local e hosts externos que você definir.
-- **Validação de DNS:** Testa a resolução de nomes via chamadas de socket do sistema operacional.
-- **Interface CLI com flags:** Permite customizar alvos, domínios e contagem de pacotes através de flags no terminal.
+* **Detecção Automática do Gateway Padrão**: Identifica o IP do roteador principal através da tabela de rotas do kernel Linux (`ip route`).
+* **Diagnóstico ICMP (Ping)**: Mede perda de pacotes e tempo médio de ida e volta (RTT) tanto para o gateway local quanto para destinos remotos.
+* **Resolução DNS**: Testa a capacidade de converter nomes de domínio em endereços IP por meio de sockets do sistema.
+* **Executável Global de Sistema**: Empacotado via `pyproject.toml`, permitindo a execução do comando `netmonitor` a partir de qualquer diretório.
+* **Parâmetros Customizáveis**: Interface flexível via terminal para definir alvos, servidores de nomes e contagem de disparos ICMP.
 
 ---
 
@@ -21,14 +22,16 @@ O projeto utiliza exclusivamente bibliotecas padrões do Python (`subprocess`, `
 network-health-monitor/
 ├── netmonitor/
 │   ├── __init__.py
-│   ├── __main__.py      # Ponto de entrada do pacote executável
-│   ├── checker.py       # Lógica central de rede (gateway, ping, dns)
+│   ├── __main__.py      # Ponto de entrada executável do pacote
+│   ├── checker.py       # Funções centrais de diagnóstico de rede
 │   └── cli.py           # Interface de linha de comando (argparse)
 ├── requirements.txt
-├── setup.sh
+├── setup.sh             # Script para automação do ambiente virtual
+├── pyproject.toml       # Definição de empacotamento e console entrypoint
 ├── .gitignore
 ├── LICENSE
 └── README.md
+```
 
 ---
 
@@ -49,12 +52,12 @@ chmod +x setup.sh
 source venv/bin/activate
 pip install -e .
 
-# 4. (Opcional) Disponibilizar o comando globalmente no sistema sem depender do ambiente virtual venv
+# 4. (Opcional) Disponibilizar o comando globalmente no sistema sem depender do venv
 mkdir -p ~/.local/bin
 ln -s "$(pwd)/venv/bin/netmonitor" ~/.local/bin/netmonitor
 ```
 
-> **Nota**: Caso execute o utilitário diretamente fora do ambiente virtual, confirme se o diretório `~/.local/bin` está presente na variável `$PATH` da sua sessão (ex.: adicionando `export PATH="$HOME/.local/bin:$PATH"` ao arquivo `~/.bashrc` ou `~/.zshrc` dependendo do shell que você estiver usando).
+> **Nota**: Caso execute o utilitário diretamente fora do ambiente virtual, confirme se o diretório `~/.local/bin` está presente na variável `$PATH` da sua sessão (ex.: adicionando `export PATH="$HOME/.local/bin:$PATH"` ao arquivo `~/.bashrc` ou `~/.zshrc`).
 
 ---
 
