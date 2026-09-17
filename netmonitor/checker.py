@@ -18,7 +18,7 @@ def get_default_gateway():
     except (subprocess.CalledProcessError, FileNotFoundError):
         return None
 
-def ping_host(host, count=3, timeout=2):
+def ping_host(host, count=4, timeout=2):
     try:
         cmd = ["ping", "-c", str(count), "-W", str(timeout), host]
         result = subprocess.run(cmd, capture_output=True, text=True)
@@ -62,9 +62,9 @@ if __name__ == "__main__":
     print(" ")
 
     if gateway:
-        result_gateway = ping_host(gateway)
-        rtt = f"{result_gateway['avg_rtt']}ms" if result_gateway['avg_rtt'] is not None else "N/A"
-        print(f"Gateway Status: online={result_gateway['online']} ; loss={result_gateway['packet_loss']}% ; avg_rtt={rtt}\n")
+        gateway_result = ping_host(gateway)
+        rtt = f"{gateway_result['avg_rtt']}ms" if gateway_result['avg_rtt'] is not None else "N/A"
+        print(f"Gateway Status: online={gateway_result['online']} ; loss={gateway_result['packet_loss']}% ; avg_rtt={rtt}\n")
 
-    result_dns = check_dns()
-    print(f"DNS Resolution: resolved={result_dns['resolved']} ; ip={result_dns['ip']}") 
+    dns_result = check_dns()
+    print(f"DNS Resolution: resolved={dns_result['resolved']} ; ip={dns_result['ip']}") 
