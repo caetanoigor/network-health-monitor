@@ -1,8 +1,8 @@
 # Network Health Monitor
 
-Uma ferramenta de linha de comando (CLI) em Python, leve e modular, voltada para diagnóstico rápido de conectividade e verificação de integridade de rede local e remota.
+Uma ferramenta de linha de comando modular (CLI) em Python, voltada para diagnóstico rápido de conectividade e verificação de integridade de rede local e remota.
 
-O projeto utiliza estritamente módulos da biblioteca padrão do Python (`subprocess`, `socket`, `re`, `argparse`), garantindo portabilidade sem dependências externas em tempo de execução.
+O projeto utiliza apenas módulos da biblioteca padrão do Python (`subprocess`, `socket`, `re`, `argparse`), sem dependências externas.
 
 ---
 
@@ -12,7 +12,7 @@ O projeto utiliza estritamente módulos da biblioteca padrão do Python (`subpro
 * **Diagnóstico ICMP (Ping)**: Mede perda de pacotes e tempo médio de ida e volta (RTT) tanto para o gateway local quanto para destinos remotos.
 * **Resolução DNS**: Testa a capacidade de converter nomes de domínio em endereços IP por meio de sockets do sistema.
 * **Executável Global de Sistema**: Empacotado via `pyproject.toml`, permitindo a execução do comando `netmonitor` a partir de qualquer diretório.
-* **Parâmetros Customizáveis**: Interface flexível via terminal para definir alvos, servidores de nomes e contagem de disparos ICMP.
+* **Parâmetros**: Interface via terminal que permite definir alvos, nomes de domínio e contagem de disparos de pings.
 
 ---
 
@@ -37,8 +37,6 @@ network-health-monitor/
 
 ## Instalação e Configuração
 
-Clone o repositório e configure o ambiente local:
-
 ```bash
 # 1. Clonar o repositório
 git clone [https://github.com/caetanoigor/network-health-monitor.git](https://github.com/caetanoigor/network-health-monitor.git)
@@ -57,7 +55,7 @@ mkdir -p ~/.local/bin
 ln -s "$(pwd)/venv/bin/netmonitor" ~/.local/bin/netmonitor
 ```
 
-> **Nota**: Caso execute o utilitário diretamente fora do ambiente virtual, confirme se o diretório `~/.local/bin` está presente na variável `$PATH` da sua sessão (ex.: adicionando `export PATH="$HOME/.local/bin:$PATH"` ao arquivo `~/.bashrc` ou `~/.zshrc`).
+> **Nota**: Caso execute o utilitário diretamente fora do ambiente virtual, confirme se o diretório `~/.local/bin` está presente na variável `$PATH` da sua sessão (ex.: adicionando `export PATH="$HOME/.local/bin:$PATH"` ao arquivo `~/.bashrc` ou `~/.zshrc` dependendo do shell que você utiliza).
 
 ---
 
