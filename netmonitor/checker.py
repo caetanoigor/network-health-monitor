@@ -44,27 +44,15 @@ def ping_host(host, count=4, timeout=2):
 def check_dns(host="google.com"):
     try:
         socket.setdefaulttimeout(3)
-        ip_founded = socket.gethostbyname(host)
+        ip_found = socket.gethostbyname(host)
         return {
             "resolved" : True,
-            "ip" : ip_founded
+            "ip" : ip_found
         }
     
-    except (socket.gaierror, socket.timeout):
+    except (socket.gaierror, socket.timeout) as exc:
         return {
             "resolved" : False,
-            "ip" : None 
+            "ip" : None,
+            "error" : str(exc)
         } 
-
-if __name__ == "__main__":
-    gateway = get_default_gateway()
-    print(f"Default Gateway: {gateway}")
-    print(" ")
-
-    if gateway:
-        gateway_result = ping_host(gateway)
-        rtt = f"{gateway_result['avg_rtt']}ms" if gateway_result['avg_rtt'] is not None else "N/A"
-        print(f"Gateway Status: online={gateway_result['online']} ; loss={gateway_result['packet_loss']}% ; avg_rtt={rtt}\n")
-
-    dns_result = check_dns()
-    print(f"DNS Resolution: resolved={dns_result['resolved']} ; ip={dns_result['ip']}") 
